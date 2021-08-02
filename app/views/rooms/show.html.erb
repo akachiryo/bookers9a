@@ -1,0 +1,22 @@
+<% @entries.each do |e| %>
+  <% if e.user != current_user %>
+  <h2><%= e.user.name %>さんとのチャット</h2>
+  <% end %>
+<% end %>
+<hr>
+<div class="chats">
+  <div class="chat">
+    <% if @messages.present? %>
+      <% @messages.each do |m| %>
+      <%= m.message %><br>
+      <% end %>
+    <% end %>
+  
+  <div class="posts">
+    <%= form_with model: @message, local:true do |f| %>
+      <%= f.text_field :message, size: 70, class:"form-text-field" %>
+        <%= f.hidden_field :room_id, value: @room.id %>
+          <%= f.submit "投稿",class: 'form-submit'%>
+    <% end %>
+  </div>
+</div>

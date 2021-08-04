@@ -1,9 +1,13 @@
 class BooksController < ApplicationController
-  before_action :authenticate_user!
+  
+  before_action :authenticate_user! , except: [:show]
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
-
+  impressionist :actions => [:show], unique: [:impressionable_type,:impressionable_id,:session_hash.to_s]
+  
   def show
+    
     @book = Book.find(params[:id])
+    impressionist(@book, nil)
   end
 
   def index
